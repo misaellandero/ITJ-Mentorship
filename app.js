@@ -12,10 +12,10 @@ const firebaseConfig = {
   appId: "1:67199414597:web:0ac86055e804559dcd0e2c",
   measurementId: "G-RT9F2DSQRN"
 };
- 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-var db = firebase.firestore();
+  
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
 // Fetch data and populate the table
 $(document).ready(function() {
@@ -82,7 +82,7 @@ $(document).ready(function() {
             console.error("Error adding document: ", error);
         });
     });
-    
+
     // Handle client form submission
     $('#clientForm').on('submit', function(e) {
       e.preventDefault();
