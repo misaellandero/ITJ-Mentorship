@@ -1,24 +1,56 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mentorship Program</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentorship Program</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- DataTables CSS (con integración para Bootstrap) -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
 </head>
 <body>
   <h1>Bienvenido al Mentorship Program</h1>
   <button id="saveData">Guardar Datos</button>
   <button id="getData">Obtener Datos</button>
 
-  <script type="module" src="app.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(registration => console.log('Service Worker registrado:', registration))
-        .catch(error => console.log('Error al registrar el Service Worker:', error));
-    }
-  </script>
+  <div class="container mt-5">
+    <h2 class="mb-4">Lista de Mentores</h2>
+    <table id="mentoresTable" class="table table-striped" style="width:100%">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Especialidad</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Los datos se insertarán aquí dinámicamente -->
+      </tbody>
+    </table>
+  </div>
+  
+    <script type="module" src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then(registration => console.log('Service Worker registrado:', registration))
+            .catch(error => console.log('Error al registrar el Service Worker:', error));
+        }
+    </script>
+    <!-- jQuery (Requisito para DataTables) -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- DataTables JS (con integración para Bootstrap) -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 </body>
+
 </html>
