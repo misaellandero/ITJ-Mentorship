@@ -14,17 +14,19 @@ const firebaseConfig = {
 };
   
   // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-// Fetch data and populate the table
-$(document).ready(function() {
-    var table = $('#teamsTable').DataTable();
+  // Fetch data and populate the tables
+  $(document).ready(function() {
+    var teamsTable = $('#teamsTable').DataTable();
+    var clientsTable = $('#clientsTable').DataTable();
 
-    db.collection("Teams").get().then((querySnapshot) => {
+    // Populate Teams Table
+    getDocs(collection(db, "Teams")).then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
             var data = doc.data();
-            table.row.add([
+            teamsTable.row.add([
                 data.ClientName,
                 data.Name,
                 data.ManagerName
@@ -32,28 +34,27 @@ $(document).ready(function() {
         });
     });
 
-     // Populate Clients Table
-     db.collection("Clients").get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-          var data = doc.data();
-          clientsTable.row.add([
-              data.Name,
-              data.Description,
-              data.DirectorName
-          ]).draw();
-      });
-  });
+    // Populate Clients Table
+    getDocs(collection(db, "Clients")).then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            var data = doc.data();
+            clientsTable.row.add([
+                data.Name,
+                data.Description,
+                data.DirectorName
+            ]).draw();
+        });
+    });
 
-  // Populate client dropdown in team form
-  db.collection("Clients").get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-          var data = doc.data();
-          $('#clientID').append(new Option(data.Name, doc.id));
-      });
-  });
+    // Populate client dropdown in team form
+    getDocs(collection(db, "Clients")).then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            var data = doc.data();
+            $('#clientID').append(new Option(data.Name, doc.id));
+        });
+    });
 
-
-    // Handle form submission
+    // Handle team form submission
     $('#teamForm').on('submit', function(e) {
         e.preventDefault();
 
@@ -62,14 +63,14 @@ $(document).ready(function() {
         var name = $('#name').val();
         var managerName = $('#managerName').val();
 
-        db.collection("Teams").add({
+        addDoc(collection(db, "Teams"), {
             ClientID: clientID,
             ClientName: clientName,
             Name: name,
             ManagerName: managerName
         }).then((docRef) => {
             console.log("Document written with ID: ", docRef.id);
-            table.row.add([
+            teamsTable.row.add([
                 clientName,
                 name,
                 managerName
@@ -85,29 +86,29 @@ $(document).ready(function() {
 
     // Handle client form submission
     $('#clientForm').on('submit', function(e) {
-      e.preventDefault();
+        e.preventDefault();
 
-      var name = $('#clientName').val();
-      var description = $('#description').val();
-      var directorName = $('#directorName').val();
+        var name = $('#clientName').val();
+        var description = $('#description').val();
+        var directorName = $('#directorName').val();
 
-      db.collection("Clients").add({
-          Name: name,
-          Description: description,
-          DirectorName: directorName
-      }).then((docRef) => {
-          console.log("Document written with ID: ", docRef.id);
-          clientsTable.row.add([
-              name,
-              description,
-              directorName
-          ]).draw();
+        addDoc(collection(db, "Clients"), {
+            Name: name,
+            Description: description,
+            DirectorName: directorName
+        }).then((docRef) => {
+            console.log("Document written with ID: ", docRef.id);
+            clientsTable.row.add([
+                name,
+                description,
+                directorName
+            ]).draw();
 
-          // Clear form and close modal
-          $('#clientForm')[0].reset();
-          $('#clientModal').modal('hide');
-      }).catch((error) => {
-          console.error("Error adding document: ", error);
-      });
-  });
-});
+            // Clear form and close modal
+            $('#clientForm')[0].reset();
+            $('#clientModal').modal('hide');
+        }).catch((error) => {
+            console.error("Error adding document: ", error);
+        });
+    });
+}); 
