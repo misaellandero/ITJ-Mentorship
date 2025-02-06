@@ -20,20 +20,26 @@
 
   <div class="container mt-5">
     <h2 class="mb-4">Lista de Mentores</h2>
-    <table id="mentoresTable" class="table table-striped" style="width:100%">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Especialidad</th>
-          <th>Email</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Los datos se insertarán aquí dinámicamente -->
+    <div class="container mt-5">
+        <h2 class="mb-4">Lista de Mentores</h2>
+        <table id="mentorsTable" class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Descripción</th>
+              <th>Activo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Los datos se insertarán aquí -->
+          </tbody>
+        </table>
+      </div>
       </tbody>
     </table>
   </div>
-  
+
     <script type="module" src="app.js"></script>
     <script>
         if ('serviceWorker' in navigator) {

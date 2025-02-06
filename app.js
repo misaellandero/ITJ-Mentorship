@@ -14,8 +14,46 @@ const firebaseConfig = {
 };
 
 // Inicializar Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const app = initializeApp(firebaseConfig);  
+const db = getFirestore();
+
+// 1. Agregar un Client
+async function addClient() {
+  await addDoc(collection(db, "Clients"), {
+    ClientID: 1,
+    Name: "Empresa XYZ",
+    Description: "Consultoría de software",
+    DirectorName: "Juan Pérez"
+  });
+}
+
+// 2. Agregar un Team
+async function addTeam() {
+  await addDoc(collection(db, "Teams"), {
+    TeamID: 101,
+    ClientID: 1,
+    Name: "Equipo Alpha",
+    ManagerName: "Laura Gómez"
+  });
+}
+
+// 3. Agregar un Mentor
+async function addMentor() {
+  await addDoc(collection(db, "Mentors"), {
+    MentorID: 201,
+    TeamID: 101,
+    FullName: "Carlos Martínez",
+    Email: "carlos@example.com",
+    Description: "Experto en desarrollo web",
+    Picture: "url_de_la_imagen",
+    Active: true
+  });
+}
+
+// Llama las funciones para agregar los datos
+addClient();
+addTeam();
+addMentor();
 
 // Guardar datos en Firestore
 document.getElementById('saveData').addEventListener('click', async () => {
@@ -30,18 +68,31 @@ document.getElementById('saveData').addEventListener('click', async () => {
   }
 });
 
-// Obtener datos de Firestore
-document.getElementById('getData').addEventListener('click', async () => {
-  try {
-    const docRef = doc(db, "usuarios", "usuario1");
-    const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
-      alert(`Datos obtenidos: ${JSON.stringify(docSnap.data())}`);
-    } else {
-      alert("No se encontraron datos");
-    }
-  } catch (error) {
-    console.error("Error al obtener los datos:", error);
+// Obtener y mostrar los mentores en la tabla
+async function cargarMentores() {
+    const querySnapshot = await getDocs(collection(db, "Mentors"));
+  
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      $('#mentorsTable tbody').append(`
+        <tr>
+          <td>${data.FullName}</td>
+          <td>${data.Email}</td>
+          <td>${data.Description}</td>
+          <td>${data.Active ? 'Sí' : 'No'}</td>
+        </tr>
+      `);
+    });
+  
+    // Inicializar DataTables
+    $('#mentorsTable').DataTable({
+      language: {
+        url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+      }
+    });
   }
-});
+  
+  // Cargar la tabla al iniciar
+  cargarMentores();
+
