@@ -2,7 +2,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
 
-// Your web app's Firebase configuration
+
+// ITJ firebase
+/*
 const firebaseConfig = {
     apiKey: "AIzaSyD1NpwCWhX7uwRR3rKUN4x7BIMd1o07MnE",
     authDomain: "mentorship-program-c2226.firebaseapp.com",
@@ -11,7 +13,17 @@ const firebaseConfig = {
     messagingSenderId: "67199414597",
     appId: "1:67199414597:web:0ac86055e804559dcd0e2c",
     measurementId: "G-RT9F2DSQRN"
+  };
+*/
+const firebaseConfig = {
+    apiKey: "AIzaSyAaEcB4jMdKSXoCYFz2Gc2HVpJffS3st74",
+    authDomain: "mentorship-itj-test.firebaseapp.com",
+    projectId: "mentorship-itj-test",
+    storageBucket: "mentorship-itj-test.firebasestorage.app",
+    messagingSenderId: "100058886770",
+    appId: "1:100058886770:web:524b91d603a4240212c8eb"
 };
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
